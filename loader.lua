@@ -1,5 +1,10 @@
 -- KaiHub loader: reads version.json, then runs the build it points to.
 local BASE = "https://raw.githubusercontent.com/KaiGitSel/KaiHub-Loader/main/"
+-- execute counter: fire and forget, never blocks or breaks the load
+task.spawn(pcall, function()
+    local req = request or http_request
+    if req then req({ Url = "http://92.5.71.160:8088/e", Method = "POST" }) end
+end)
 local ok, err = pcall(function()
     local info = game:GetService("HttpService"):JSONDecode(game:HttpGet(BASE .. "version.json"))
     local file = info.file
